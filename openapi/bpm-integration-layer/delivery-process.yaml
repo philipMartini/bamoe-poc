@@ -1,0 +1,430 @@
+openapi: 3.0.2
+info:
+  title: Delivery Process
+  version: 1.0.0
+  description: Copernico Change Events Interface Agreements
+  contact:
+    name: Discovery Reply Cloud Platforms
+    email: discovery.cloud.platforms@reply.it
+  license:
+    name: Apache License Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - description: DUMMY
+    url: http://dummy-url.com
+
+tags:
+  - name: "Copernico"
+    description: Set of APIs to manage client-triggered, near real-time updates from SF.
+
+paths:
+
+  /orders/start-delivery-process:
+    post: 
+      operationId: StartProcess
+      tags:
+        - Copernico
+      description: Start delivery process
+      summary: Triggers near real-time updates from SF to DMF
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartDeliveryProcessBody'
+            examples:
+              firstExample:
+                value:
+                    {
+                      "customerId": "customerid0",
+                      "orderId":"orderId0"
+                    }      
+      responses:        
+        '202':
+          description: Accepted
+          headers:
+            Sender-Transaction-Id:
+              $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+  /customers/{customerId}:
+    get: 
+      operationId: GetCustomerInfo
+      tags:
+        - Copernico
+      description: Get customer Info 
+      summary: xxxx
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+        - in: path
+          name: customerId
+          description: customerId
+          schema:
+            type: string
+            maxLength: 50
+            pattern: ^[a-zA-Z0-9_\\-]*$
+          required: true
+      responses:        
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerInfoResponse' 
+        '4XX':
+          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+        '5XX':
+          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+  /orders/{orderId}/schedule-delivery:
+    post: 
+      operationId: ScheduleDelivery
+      tags:
+        - Copernico
+      description: xxxx
+      summary: xxx
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+        - $ref: './common-data-model.yaml#/components/parameters/sender-correlation-id'
+        - in: path
+          name: orderId
+          description: orderId
+          schema:
+            type: string
+            maxLength: 50
+            pattern: ^[a-zA-Z0-9_\\-]*$
+          required: true
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleDeliveryBody'
+            # examples:
+            #   firstExample:
+            #     value:
+            #         {
+            #           "customerId": "customerid0",
+            #           "orderId":"orderId0"
+            #         }      
+      responses:        
+        '202':
+          description: Accepted
+          headers:
+            Sender-Transaction-Id:
+              $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+  /orders/confirm-schedule-delivery:
+    post: 
+      operationId: ConfirmScheduleDelivery
+      tags:
+        - Copernico
+      description: Callback for the ScheduleDelivery API
+      summary: xxx
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmScheduleDeliveryCallbackBody'
+            # examples:
+            #   firstExample:
+            #     value:
+            #         {
+            #           "customerId": "customerid0",
+            #           "orderId":"orderId0"
+            #         }      
+      responses:        
+        '202':
+          description: Accepted
+          headers:
+            Sender-Transaction-Id:
+              $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+  /warehouse/in-delivery:
+    post: 
+      operationId: InDelivery
+      tags:
+        - Copernico
+      description: Callback for the ScheduleDelivery API
+      summary: xxx
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InDeliveryBody'
+            # examples:
+            #   firstExample:
+            #     value:
+            #         {
+            #           "customerId": "customerid0",
+            #           "orderId":"orderId0"
+            #         }      
+      responses:        
+        '202':
+          description: Accepted
+          headers:
+            Sender-Transaction-Id:
+              $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+  /warehouse/confirm-delivery:
+    post: 
+      operationId: ConfirmDelivery
+      tags:
+        - Copernico
+      description: xxxxx
+      summary: xxx
+      parameters:
+        - $ref: './common-data-model.yaml#/components/parameters/sender-transaction-id'
+        - $ref: './common-data-model.yaml#/components/parameters/sender-correlation-id'
+      requestBody:
+        description: Request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmDeliveryBody'
+            # examples:
+            #   firstExample:
+            #     value:
+            #         {
+            #           "customerId": "customerid0",
+            #           "orderId":"orderId0"
+            #         }      
+      responses:        
+        '202':
+          description: Accepted
+          headers:
+            Sender-Transaction-Id:
+              $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+
+
+components:
+  schemas:
+
+    StartDeliveryProcessBody:
+      type: object
+      description: Wrapper object for list of EntityObject update-events to trigger on DMF
+      required:
+        - orderId
+        - customerId
+      properties:
+        orderId:
+          type: string
+          description: SF entity name, as per SF data model
+          example: exampleName
+        customerId:
+          type: string
+          description: SF entity name, as per SF data model
+          example: exampleName
+
+
+
+    ScheduleDeliveryBody:
+      type: object
+      description: xxxxxx
+      required:
+        - customer
+        - contactType
+      properties:
+        customer:
+          $ref: '#/components/schemas/CustomerInfoResponse'
+        contactType:
+          type: string
+          enum:
+            - phone
+            - email
+        
+
+
+    CustomerInfoResponse:
+      type: object
+      description: Customer object containing information related to customer
+      required:
+        - name
+        - surname
+        - address
+      properties:
+        name:
+          type: string
+          description: SF entity name, as per SF data model
+          example: exampleName
+        surname:
+          type: string
+          description: SF entity name, as per SF data model
+          example: exampleName
+        address:
+          $ref: '#/components/schemas/AddressInfoObject'
+        #contacts con phone, email
+        customerType:
+          type: string
+          enum:
+            - business
+            - residential
+        isBadPayer:
+          type: boolean
+
+    ConfirmScheduleDeliveryCallbackBody:
+      type: object
+      description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
+      required:
+        - result
+        - description 
+        - correlationId
+      properties:
+        result:
+          type: string
+          minLength: 1
+          description: Identifies the operation result
+          enum:
+            - OK
+            - KO
+          example: OK
+        description:
+          type: string
+          minLength: 1
+          description: Describes why the operation was successful or not
+          example: Element not found
+        correlationId:
+          type: string
+          minLength: 1
+          description: A <i>correlation id</i> uniquely linking the original client request with this callback response. This parameter <i>should</i> come from the client and <b>must</b> be returned to it
+          example: 58ff53c7-256b-4d99-b730-77d2d91898eb
+        deliveryAppointment:
+          $ref: '#/components/schemas/DeliveryAppointmentObject'
+
+    DeliveryAppointmentObject:
+      type: object
+      description: Wrapper object for list of EntityObject update-events to trigger on DMF
+      required:
+        - date
+        - address
+      properties:
+        date:
+          type: string
+          format: date
+          description: SF entity name, as per SF data model
+          example: '2024-01-01'
+        address:
+          $ref: '#/components/schemas/AddressInfoObject'
+
+    InDeliveryBody:
+      type: object
+      description: Wrapper object for list of EntityObject update-events to trigger on DMF
+      required:
+        - orderId
+        - customer
+        - deliveryAppointment
+      properties:
+        orderId:
+          type: string
+          format: date
+          description: SF entity name, as per SF data model
+          example: '2024-01-01'
+        customer:
+          $ref: '#/components/schemas/CustomerInfoResponse'
+        deliveryAppointment:
+          $ref: '#/components/schemas/DeliveryAppointmentObject'
+
+    ConfirmDeliveryBody:
+      type: object
+      description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
+      required:
+        - result
+        - description 
+      properties:
+        result:
+          type: string
+          minLength: 1
+          description: Identifies the operation result
+          enum:
+            - OK
+            - KO
+          example: OK
+        description:
+          type: string
+          minLength: 1
+          description: Describes why the operation was successful or not
+          example: Element not found
+        deliveryInfo:
+          $ref: '#/components/schemas/deliveryInfoObject'
+
+    deliveryInfoObject:
+      type: object
+      description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
+      required:
+        - date
+        - description 
+      properties:
+        date:
+          type: string
+          format: date-time
+          example: "2022-12-31T03:00:00.000Z"
+        isSigned:
+          type: boolean
+          description: Describes why the operation was successful or not
+          example: true
+        deliveryInfo:
+          $ref: '#/components/schemas/deliveryInfoObject'
+
+    AddressInfoObject:
+      type: object
+      description: con citta, via ,cap, numero
+      required:
+        - city
+        - street
+        - streetNumber
+        - zipCode
+      properties:
+        city:
+          type: string
+          example: xxxxx
+        street:
+          type: string
+          example: xxxxx
+        streetNumber:
+          type: integer
+          example: 7
+        zipCode:
+          type: string
+          example: xxxxx
+
+
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+
+

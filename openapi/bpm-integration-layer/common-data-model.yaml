@@ -1,0 +1,136 @@
+components:
+
+  parameters:
+    sender:
+      name: Sender
+      in: header
+      required: true
+      description: The label of the sender.
+      schema:
+        type: string
+        minLength: 1
+
+    sender-transaction-id:
+      name: Sender-Transaction-Id
+      in: header
+      required: true
+      description: The transaction ID of the sender. This is a free parameter but it is advised to use a UUID format
+      schema:
+        type: string
+        minLength: 1
+
+    sender-transaction-datetime:
+      name: Sender-Transaction-Datetime
+      in: header
+      required: true
+      description: The transaction datetime of the sender, it is associated to the request sent by the sender.
+      schema:
+        type: string
+        format: date-time
+        example:  '2017-07-21T17:32:28Z'
+
+    sender-correlation-id:
+      name: Sender-Correlation-Id
+      in: header
+      required: true
+      description: The correlation ID of the sender, it have to be used for the integration that requires a callback from upstream to the sender to complete the workflow. This is a free parameter but it is advised to use a UUID format.
+      schema:
+        type: string
+        minLength: 1
+
+  headers:
+
+    sender-transaction-id:
+      required: true
+      description: The transaction ID of the sender. This is a free parameter but it is advised to use a UUID format
+      schema:
+        type: string
+        minLength: 1
+    
+    api-version:
+      required: true
+      description: The API version being invoked. The version specified in path only identifies the major component of the API. All exposed APIs will put this header in the response specifying the full versioning of the API that actually produced the output.
+      schema:
+        type: string
+        minLength: 1
+        format: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+
+  schemas:
+    IntegrationError:
+      description: "Integration error object"
+      required:
+        - errorCode
+        - description
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+          minimum: -2147483648
+          maximum: 2147483647
+          description: "An integer value, uniquely identifying a class error"
+          example: -1
+        description:
+          type: string
+          minLength: 1
+          description: "Natural language description of <i>errorCode</i>"
+          example: Internal error
+
+  responses:
+    Http4XXResponse:
+      description: 'Raised when a 4xx series response is being returned the client'
+      headers:
+        Sender-Transaction-Id:
+              $ref: '#/components/headers/sender-transaction-id'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IntegrationError'
+          examples:
+            GenericExample:
+              description: Generic error response
+              value:
+                errorCode: -1
+                description: "Entity not found"
+            TooManyRequestExample:
+              description: >-
+                Error response returned when the number of requests of a single consumer exceeds the limits.
+                This response will be returned with HTTP response code 429.
+              value:
+                errorCode: 429
+                description: "API rate limit exceeded"
+            ForbiddenExample:
+              description: >-
+                Error response returned when the consumer is not allowed to consume the service.
+                This response will be returned with HTTP response code 403.
+              value:
+                errorCode: 403
+                description: "Gateway aborted request processing with message: You cannot consume this service"
+
+    Http5XXResponse:
+      description: 'Raised when a 5xx series response is being returned the client'
+      headers:
+        Sender-Transaction-Id:
+              $ref: '#/components/headers/sender-transaction-id'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IntegrationError'
+          examples:
+            GenericExample:
+              description: Generic error response
+              value:
+                errorCode: -1
+                description: "Connection refused"
+            ServiceMaintenanceExample:
+              description: >-
+                Error response returned when the service is unavailable due to backend maintenance.
+                This response will be returned with HTTP response code 521.
+              value:
+                errorCode: 521
+                description: "Service unavailable due to backend maintenance"
+      
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
