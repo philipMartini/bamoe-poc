@@ -291,7 +291,7 @@ components:
           enum:
             - business
             - residential
-        isBadPayer:
+        badPayer:
           type: boolean
 
     ConfirmScheduleDeliveryCallbackBody:
