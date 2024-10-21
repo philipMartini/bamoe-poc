@@ -255,7 +255,6 @@ components:
       description: xxxxxx
       required:
         - customer
-        - contactType
       properties:
         customer:
           $ref: '#/components/schemas/CustomerInfoResponse'
@@ -390,12 +389,10 @@ components:
           type: string
           format: date-time
           example: "2022-12-31T03:00:00.000Z"
-        isSigned:
+        signed:
           type: boolean
           description: Describes why the operation was successful or not
           example: true
-        deliveryInfo:
-          $ref: '#/components/schemas/deliveryInfoObject'
 
     AddressInfoObject:
       type: object
