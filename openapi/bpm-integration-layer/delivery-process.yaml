@@ -283,7 +283,7 @@ components:
           description: SF entity name, as per SF data model
           example: exampleName
         address:
-          $ref: '#/components/schemas/AddressInfoObject'
+          $ref: '#/components/schemas/AddressObject'
         #contacts con phone, email
         customerType:
           type: string
@@ -335,7 +335,7 @@ components:
           description: SF entity name, as per SF data model
           example: '2024-01-01'
         address:
-          $ref: '#/components/schemas/AddressInfoObject'
+          $ref: '#/components/schemas/AddressObject'
 
     InDeliveryBody:
       type: object
@@ -394,7 +394,7 @@ components:
           description: Describes why the operation was successful or not
           example: true
 
-    AddressInfoObject:
+    AddressObject:
       type: object
       description: con citta, via ,cap, numero
       required:
