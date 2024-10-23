@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Delivery Process
   version: 1.0.0
-  description: Copernico Change Events Interface Agreements
+  description: Poc Bamoe Interface Agreements
   contact:
     name: Discovery Reply Cloud Platforms
     email: discovery.cloud.platforms@reply.it
@@ -14,7 +14,7 @@ servers:
     url: http://dummy-url.com
 
 tags:
-  - name: "Copernico"
+  - name: "Bamoe"
     description: Set of APIs to manage client-triggered, near real-time updates from SF.
 
 paths:
@@ -23,7 +23,7 @@ paths:
     post: 
       operationId: StartProcess
       tags:
-        - Copernico
+        - Bamoe
       description: Start delivery process
       summary: Triggers near real-time updates from SF to DMF
       parameters:
@@ -34,7 +34,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StartDeliveryProcessBody'
+              $ref: '#/components/schemas/StartDeliveryProcessRequest'
             examples:
               firstExample:
                 value:
@@ -57,7 +57,7 @@ paths:
     get: 
       operationId: GetCustomerInfo
       tags:
-        - Copernico
+        - Bamoe
       description: Get customer Info 
       summary: xxxx
       parameters:
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerInfoResponse' 
+                $ref: '#/components/schemas/CustomerObject' 
         '4XX':
           $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
         '5XX':
@@ -86,7 +86,7 @@ paths:
     post: 
       operationId: ScheduleDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: xxxx
       summary: xxx
       parameters:
@@ -106,7 +106,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ScheduleDeliveryBody'
+              $ref: '#/components/schemas/DeliveryAppointmentRequest'
             # examples:
             #   firstExample:
             #     value:
@@ -129,7 +129,7 @@ paths:
     post: 
       operationId: ConfirmScheduleDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: Callback for the ScheduleDelivery API
       summary: xxx
       parameters:
@@ -140,7 +140,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConfirmScheduleDeliveryCallbackBody'
+              $ref: '#/components/schemas/DeliveryAppointmentCallback'
             # examples:
             #   firstExample:
             #     value:
@@ -163,7 +163,7 @@ paths:
     post: 
       operationId: InDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: Callback for the ScheduleDelivery API
       summary: xxx
       parameters:
@@ -174,7 +174,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InDeliveryBody'
+              $ref: '#/components/schemas/DeliveryRequest'
             # examples:
             #   firstExample:
             #     value:
@@ -197,7 +197,7 @@ paths:
     post: 
       operationId: ConfirmDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: xxxxx
       summary: xxx
       parameters:
@@ -209,7 +209,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ConfirmDeliveryBody'
+              $ref: '#/components/schemas/DeliveryCallback'
             # examples:
             #   firstExample:
             #     value:
@@ -223,16 +223,16 @@ paths:
           headers:
             Sender-Transaction-Id:
               $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
-        '4XX':
-          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
-        '5XX':
-          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+            '4XX':
+              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+            '5XX':
+              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
 
 
 components:
   schemas:
 
-    StartDeliveryProcessBody:
+    StartDeliveryProcessRequest:
       type: object
       description: Wrapper object for list of EntityObject update-events to trigger on DMF
       required:
@@ -250,15 +250,14 @@ components:
 
 
 
-    ScheduleDeliveryBody:
+    DeliveryAppointmentRequest:
       type: object
       description: xxxxxx
       required:
         - customer
-        - contactType
       properties:
         customer:
-          $ref: '#/components/schemas/CustomerInfoResponse'
+          $ref: '#/components/schemas/CustomerObject'
         contactType:
           type: string
           enum:
@@ -267,7 +266,7 @@ components:
         
 
 
-    CustomerInfoResponse:
+    CustomerObject:
       type: object
       description: Customer object containing information related to customer
       required:
@@ -284,17 +283,17 @@ components:
           description: SF entity name, as per SF data model
           example: exampleName
         address:
-          $ref: '#/components/schemas/AddressInfoObject'
+          $ref: '#/components/schemas/AddressObject'
         #contacts con phone, email
         customerType:
           type: string
           enum:
             - business
             - residential
-        isBadPayer:
+        badPayer:
           type: boolean
 
-    ConfirmScheduleDeliveryCallbackBody:
+    DeliveryAppointmentCallback:
       type: object
       description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
       required:
@@ -336,9 +335,9 @@ components:
           description: SF entity name, as per SF data model
           example: '2024-01-01'
         address:
-          $ref: '#/components/schemas/AddressInfoObject'
+          $ref: '#/components/schemas/AddressObject'
 
-    InDeliveryBody:
+    DeliveryRequest:
       type: object
       description: Wrapper object for list of EntityObject update-events to trigger on DMF
       required:
@@ -352,11 +351,11 @@ components:
           description: SF entity name, as per SF data model
           example: '2024-01-01'
         customer:
-          $ref: '#/components/schemas/CustomerInfoResponse'
+          $ref: '#/components/schemas/CustomerObject'
         deliveryAppointment:
           $ref: '#/components/schemas/DeliveryAppointmentObject'
 
-    ConfirmDeliveryBody:
+    DeliveryCallback:
       type: object
       description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
       required:
@@ -376,10 +375,10 @@ components:
           minLength: 1
           description: Describes why the operation was successful or not
           example: Element not found
-        deliveryInfo:
-          $ref: '#/components/schemas/deliveryInfoObject'
+        delivery:
+          $ref: '#/components/schemas/DeliveryObject'
 
-    deliveryInfoObject:
+    DeliveryObject:
       type: object
       description: The basic body of the callback (as it appears in referenced callback structure) contains three mandatory parameters that indicates what result to communicate and which transaction it refers to.
       required:
@@ -390,14 +389,12 @@ components:
           type: string
           format: date-time
           example: "2022-12-31T03:00:00.000Z"
-        isSigned:
+        signed:
           type: boolean
           description: Describes why the operation was successful or not
           example: true
-        deliveryInfo:
-          $ref: '#/components/schemas/deliveryInfoObject'
 
-    AddressInfoObject:
+    AddressObject:
       type: object
       description: con citta, via ,cap, numero
       required:
@@ -425,6 +422,3 @@ components:
     basicAuth:
       type: http
       scheme: basic
-
-
-

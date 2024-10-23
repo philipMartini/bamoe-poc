@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Delivery Process
   version: 1.0.0
-  description: Copernico Change Events Interface Agreements
+  description: Poc Bamoe Interface Agreements
   contact:
     name: Discovery Reply Cloud Platforms
     email: discovery.cloud.platforms@reply.it
@@ -14,7 +14,7 @@ servers:
     url: http://dummy-url.com
 
 tags:
-  - name: "Copernico"
+  - name: "Bamoe"
     description: Set of APIs to manage client-triggered, near real-time updates from SF.
 
 paths:
@@ -23,7 +23,7 @@ paths:
     post: 
       operationId: StartProcess
       tags:
-        - Copernico
+        - Bamoe
       description: Start delivery process
       summary: Triggers near real-time updates from SF to DMF
       parameters:
@@ -48,16 +48,16 @@ paths:
           headers:
             Sender-Transaction-Id:
               $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
-            '4XX':
-              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
-            '5XX':
-              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+        '4XX':
+          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+        '5XX':
+          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
 
   /customers/{customerId}:
     get: 
       operationId: GetCustomerInfo
       tags:
-        - Copernico
+        - Bamoe
       description: Get customer Info 
       summary: xxxx
       parameters:
@@ -86,7 +86,7 @@ paths:
     post: 
       operationId: ScheduleDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: xxxx
       summary: xxx
       parameters:
@@ -120,16 +120,16 @@ paths:
           headers:
             Sender-Transaction-Id:
               $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
-            '4XX':
-              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
-            '5XX':
-              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+        '4XX':
+          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+        '5XX':
+          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
 
   /orders/confirm-schedule-delivery:
     post: 
       operationId: ConfirmScheduleDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: Callback for the ScheduleDelivery API
       summary: xxx
       parameters:
@@ -154,16 +154,16 @@ paths:
           headers:
             Sender-Transaction-Id:
               $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
-            '4XX':
-              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
-            '5XX':
-              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+        '4XX':
+          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+        '5XX':
+          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
 
   /warehouse/in-delivery:
     post: 
       operationId: InDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: Callback for the ScheduleDelivery API
       summary: xxx
       parameters:
@@ -188,16 +188,16 @@ paths:
           headers:
             Sender-Transaction-Id:
               $ref: './common-data-model.yaml#/components/headers/sender-transaction-id'
-            '4XX':
-              $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
-            '5XX':
-              $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
+        '4XX':
+          $ref: './common-data-model.yaml#/components/responses/Http4XXResponse'
+        '5XX':
+          $ref: './common-data-model.yaml#/components/responses/Http5XXResponse'
 
   /warehouse/confirm-delivery:
     post: 
       operationId: ConfirmDelivery
       tags:
-        - Copernico
+        - Bamoe
       description: xxxxx
       summary: xxx
       parameters:
