@@ -26,6 +26,6 @@ public class DeliveryService {
 	public void createDeliveryOrder(StartDeliveryProcessRequest request)
 	{
 		Map<String,Object> body = mapper.createBamoeStartProcessRequestBody(request);
-		processInstancesApi.startProcess("tmp_1.0.0-SNAPSHOT", "tmp.test1", body);
+		processInstancesApi.startProcess("poc_datamodel_v1_1.0.0-SNAPSHOT", "poc_datamodel_v1.ProcessDelivery_with_datamodel", body);
 	}
 }

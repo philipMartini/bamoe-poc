@@ -60,3 +60,21 @@ paths:
           description: "Process ID or Container ID not found."
         "403":
           description: "User does not have permission to access this resource."
+
+
+
+
+
+components:
+  schemas:
+
+    ProcessParameters:
+      type: object
+      description: Wrapper object for list of EntityObject update-events to trigger on DMF
+      required:
+        - APIurl
+      properties:
+        APIurl:
+          type: string
+          description: SF entity name, as per SF data model
+          example: exampleName

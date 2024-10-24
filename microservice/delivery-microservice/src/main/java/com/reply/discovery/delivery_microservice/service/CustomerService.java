@@ -18,7 +18,7 @@ public class CustomerService {
 		this.mapper = mapper;
 	}
 	
-	public CustomerObject getCustomer(int customerId)
+	public CustomerObject getCustomer(String customerId)
 	{
 		return mapper.createCustomerInfoRespose();
 	}

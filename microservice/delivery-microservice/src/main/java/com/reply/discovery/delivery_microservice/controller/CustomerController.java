@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,11 +27,11 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@ResponseStatus(value = HttpStatus.OK)
-	@GetMapping(value = Endpoints.GET_CUSTOMER_ENDPOINT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public CustomerObject getCustomer(@PathVariable(name=Constants.CUSTOMER_ID,required=true) Integer customerId,
-									@RequestHeader(required = true, name = Headers.SENDER) String sender,
-							        @RequestHeader(required = true, name = Headers.SENDER_TRANSACTION_ID) String senderTID,
-								    @RequestHeader(required = true, name = Headers.SENDER_TRANSACTION_DATETIME) String senderTDT)
+	@PostMapping(value = Endpoints.GET_CUSTOMER_ENDPOINT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public CustomerObject getCustomer(@PathVariable(name=Constants.CUSTOMER_ID,required=true) String customerId,
+									@RequestHeader(required = false, name = Headers.SENDER) String sender,
+							        @RequestHeader(required = false, name = Headers.SENDER_TRANSACTION_ID) String senderTID,
+								    @RequestHeader(required = false, name = Headers.SENDER_TRANSACTION_DATETIME) String senderTDT)
 	{
 		return customerService.getCustomer(customerId);
 	}
