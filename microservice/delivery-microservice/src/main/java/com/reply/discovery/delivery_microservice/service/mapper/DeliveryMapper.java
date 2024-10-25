@@ -6,7 +6,6 @@ import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
-import com.reply.discovery.autogen.backends.bamoe.generic.ProcessConfiguration;
 import com.reply.discovery.autogen.backends.bamoe.generic.ProcessParameters;
 
 import com.fasterxml.jackson.core.type.TypeReference;
