@@ -74,7 +74,11 @@ components:
       required:
         - APIurl
       properties:
-        APIurl:
+        APIUrl:
           type: string
-          description: SF entity name, as per SF data model
+          description: URL of the API to invoce
           example: exampleName
+        APIWithAsyncCallback:
+          type: boolean
+          description: indicate if the API expected an async callback
+          example: true
