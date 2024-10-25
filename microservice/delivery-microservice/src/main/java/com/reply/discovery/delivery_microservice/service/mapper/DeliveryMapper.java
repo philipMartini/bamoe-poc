@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 import com.reply.discovery.autogen.backends.bamoe.generic.ProcessConfiguration;
 import com.reply.discovery.autogen.backends.bamoe.generic.ProcessParameters;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import it.reply.discovery.integration.delivery.model.DeliveryAppointmentCallback;
 import it.reply.discovery.integration.delivery.model.StartDeliveryProcessRequest;
 
 @Component
@@ -23,5 +27,10 @@ public class DeliveryMapper {
 		requestMap.put("processParameters", processParameters);
 		//JSONObject jsonObject = new JSONObject(requestMap);
 		return requestMap; //jsonObject.toString();
+	}
+	
+	public Map<String,Object> createBamoeSendMessageRequestBody(DeliveryAppointmentCallback request) {
+		ObjectMapper objectMapper = new ObjectMapper();
+	    return objectMapper.convertValue(request, new TypeReference<Map<String, Object>>() {});
 	}
 }

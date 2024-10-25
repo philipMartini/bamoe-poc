@@ -85,7 +85,7 @@
        	<dependency>
        		<groupId>com.reply.discovery</groupId>
        		<artifactId>bamoe-rest-api-client</artifactId>
-       		<version>0.0.3-SNAPSHOT</version>
+       		<version>0.0.6-SNAPSHOT</version>
        	</dependency>
        	
        	<dependency>
@@ -101,8 +101,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
-
 			
 	      	<plugin>
 		        <groupId>org.openapitools</groupId>

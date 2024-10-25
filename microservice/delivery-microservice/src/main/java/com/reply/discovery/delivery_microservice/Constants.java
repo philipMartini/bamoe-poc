@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 public class Constants
 {
 	public static final String CUSTOMER_ID = "customerId";
+	public static final String PROCESS_INSTANCE_ID = "processInstanceId";
 
 }

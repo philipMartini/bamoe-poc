@@ -1,0 +1,13 @@
+com\reply\discovery\autogen\backends\bamoe\auth\Authentication.class
+com\reply\discovery\autogen\backends\bamoe\auth\ApiKeyAuth.class
+com\reply\discovery\autogen\backends\bamoe\auth\HttpBearerAuth.class
+com\reply\discovery\autogen\backends\bamoe\auth\HttpBasicAuth.class
+com\reply\discovery\bamoe\rest\client\config\RestTemplateProvider.class
+com\reply\discovery\autogen\backends\bamoe\generic\BamoeBackendApi.class
+com\reply\discovery\autogen\backends\bamoe\RFC3339DateFormat.class
+com\reply\discovery\autogen\backends\bamoe\ApiClient$CollectionFormat.class
+com\reply\discovery\autogen\backends\bamoe\generic\BamoeBackendApi$1.class
+com\reply\discovery\bamoe\rest\client\config\BamoeRestApiClientConfig.class
+com\reply\discovery\autogen\backends\bamoe\JavaTimeFormatter.class
+com\reply\discovery\autogen\backends\bamoe\ApiClient$ApiClientHttpRequestInterceptor.class
+com\reply\discovery\autogen\backends\bamoe\ApiClient.class

@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reply.discovery.delivery_microservice.Constants;
 import com.reply.discovery.delivery_microservice.Endpoints;
 import com.reply.discovery.delivery_microservice.Headers;
 import com.reply.discovery.delivery_microservice.service.DeliveryService;
 
+import it.reply.discovery.integration.delivery.model.DeliveryAppointmentCallback;
 import it.reply.discovery.integration.delivery.model.StartDeliveryProcessRequest;
 
 @Validated
@@ -34,4 +37,17 @@ public class DeliveryController {
 	{
 		deliveryService.createDeliveryOrder(request);
 	}
+	
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+	@PostMapping(value = Endpoints.CREATE_CALLBACK_CONFIRM_SCHEDULE_ENDPOINT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void createCallbackConfirmDeliveryOrder(@Valid @RequestBody(required = true) DeliveryAppointmentCallback request,
+									@PathVariable(required=true,name=Constants.PROCESS_INSTANCE_ID) String processInstanceId,
+							        @RequestHeader(required = true, name = Headers.SENDER) String sender,
+							        @RequestHeader(required = true, name = Headers.SENDER_TRANSACTION_ID) String senderTID,
+								    @RequestHeader(required = true, name = Headers.SENDER_TRANSACTION_DATETIME) String senderTDT)
+	{
+		deliveryService.createCallbackConfirmDeliveryOrder(processInstanceId,request);
+	}
+	
+	
 }

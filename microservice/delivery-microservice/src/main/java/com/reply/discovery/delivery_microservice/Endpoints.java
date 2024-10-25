@@ -11,5 +11,5 @@ public class Endpoints
 	 */
 	public static final String CREATE_DELIVERY_ORDER_ENDPOINT = "/orders/start-delivery-process";
 	public static final String GET_CUSTOMER_ENDPOINT = "/customers/{customerId}";
-
+	public static final String CREATE_CALLBACK_CONFIRM_SCHEDULE_ENDPOINT = "/orders/confirm-schedule-delivery/{processInstanceId}";
 }
