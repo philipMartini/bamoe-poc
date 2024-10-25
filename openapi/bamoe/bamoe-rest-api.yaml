@@ -61,9 +61,98 @@ paths:
         "403":
           description: "User does not have permission to access this resource."
 
+  /server/containers/{containerId}/processes/instances/signal/{signalName}:
+    post:
+      tags:
+        - "Bamoe Backend"
+      summary: "Signals a specified process instance with a specified signal name and optional signal data."
+      description: "Signals a specified process instance with a specified signal name and optional signal data."
+      operationId: "sendMessageByContainerIdAndSignalName"
+      parameters:
+        - in: path
+          name: containerId
+          required: true
+          description: "ID of the container where the process definition resides."
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 10
+            pattern: '^[a-zA-Z0-9_\-]*$'
+        - in: path
+          name: signalName
+          description: "signal name to be send to process instance"
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+            pattern: '^[a-zA-Z0-9_\-]*$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: "Message sent"
+        "500":
+          description: "Unexpected error"
+        "404":
+          description: "Process instance or Container Id not found"
+        "403":
+          description: "User does not have permission to access this asset"
 
-
-
+  /server/containers/{containerId}/processes/instances/{processInstanceId}/signal/{signalName}:
+    post:
+      tags:
+        - "Bamoe Backend"
+      summary: "Signals a specified process instance with a specified signal name and optional signal data."
+      description: "Signals a specified process instance with a specified signal name and optional signal data."
+      operationId: "sendMessageByContainerIdProcessInstanceIdAndSignalName"
+      parameters:
+        - in: path
+          name: containerId
+          required: true
+          description: "ID of the container where the process definition resides."
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 10
+            pattern: '^[a-zA-Z0-9_\-]*$'
+        - in: path
+          name: processInstanceId
+          description: "identifier of the process instance to be signaled"
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: signalName
+          description: "signal name to be send to process instance"
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 100
+            pattern: '^[a-zA-Z0-9_\-]*$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: "Message sent"
+        "500":
+          description: "Unexpected error"
+        "404":
+          description: "Process instance or Container Id not found"
+        "403":
+          description: "User does not have permission to access this asset"
 
 components:
   schemas:
