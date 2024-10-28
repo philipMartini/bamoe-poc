@@ -39,7 +39,7 @@ public class DeliveryMapper {
 		//*/
 		
 		ProcessParameters processParameters = new ProcessParameters();
-		processParameters.setApIUrl("http://192.168.178.102:8088/customers/" + request.getCustomerId());
+		processParameters.setApIUrl("http://192.168.178.102:80888/customers/" + request.getCustomerId());
 		processParameters.setApIWithAsyncCallback(false);
 		requestMap.put("processRequest", request);
 		requestMap.put("processParameters", processParameters);
